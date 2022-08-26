@@ -1,3 +1,4 @@
+from sqlalchemy import true
 from app.model import (User, Resume, JD, Demographic_details, Contact_details, Highest_qualification,
 					   Qualifications, Certifications, Projects,
 					   Experience, Other_details)
@@ -52,10 +53,10 @@ def login():
 	elif not user.check_password(password):
 		return jsonify({'msg':'Wrong Username or password'}), 404
 
-	expires_delta = datetime.timedelta(days=5)
+	expires_delta = datetime.timedelta(seconds=600)
 	token = create_access_token(identity=str(user.id),
-									expires_delta=expires_delta)
-	return jsonify({'access_token': token})
+									expires_delta=expires_delta, fresh=True)
+	return jsonify({'access_token': token}), 200
 
 
 @bp.route('/api/users', methods = ['GET'])

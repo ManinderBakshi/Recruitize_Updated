@@ -7,8 +7,8 @@ class Config():
     '''Config settings class.'''
    
 
-    SQLALCHEMY_DATABASE_URI= 'mysql://root:''@localhost/Recruitize'
-
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+        'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
 
@@ -16,5 +16,5 @@ class Config():
     JWT_BLACKLIST_TOKEN_CHECKS = ['access']
 
 
-    SECRET_KEY = 'you-will-never-guess'
+    SECRET_KEY = 'maninderbakshi'
         

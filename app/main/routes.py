@@ -97,6 +97,7 @@ app.config["CREATED_WORDCLOUDS"] = os.getcwd()+"//app//static//img//Created_Word
 app.config["CREATED_GRAPHS"] = os.getcwd()+"//app//static//img//Created_Graphs"
 app.config["CREATED_PIE"] = os.getcwd()+"//app//static//img//Created_Pie"
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["PDF", "DOC", "DOCX"]
+plt.switch_backend('Agg')
 
 # Website Index page
 @bp.route('/', methods=['GET','POST'])
@@ -1057,7 +1058,7 @@ def extract_name(resume_text):
     matcher = Matcher(nlp.vocab)
     nlp_text = nlp(resume_text[:50])
     pattern = [{'POS': 'PROPN'}, {'POS': 'PROPN'}]
-    matcher.add('NAME', None, pattern)
+    matcher.add('NAME', [pattern], on_match=None)
     matches = matcher(nlp_text)
     for match_id, start, end in matches:
         span = nlp_text[start:end]
@@ -1526,13 +1527,13 @@ def create_user_json(filename,pdf_path):
     data["GName"] = graph
     data["Pie"] = pie
     piepath = app.config["CREATED_PIE"] + '//' + pie
-    data["PieChart"] = Competenciespiechart(data["Competencies"], piepath)
+    # data["PieChart"] = Competenciespiechart(data["Competencies"], piepath)
     try:
         data["Psychograph"]=create_psychograph(t, gpath)
     except:print("Psychograph Error")
     #try:
-    docx_file = pdf_path.replace('.pdf','.docx')
-    parse(pdf_path, docx_file, start=0)
+    docx_file = os.path.join(app.config["UPLOADED_RESUMES"], 'ManinderSinghBakshiResume.docx')
+    # parse(pdf_path, docx_file, start=0, end=None)
     soup=convert_doc_to_soup(docx_file)
     bold_list=extract_bold_from_soup(soup)
     companies=extract_companies(bold_list)
