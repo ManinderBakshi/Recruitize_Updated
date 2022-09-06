@@ -1,3 +1,3 @@
 import sys
-sys.path.insert(0, "/var/www/Recruitize_website-main")
+sys.path.insert(0, "/var/www/Recruitize")
 from app import app as application
