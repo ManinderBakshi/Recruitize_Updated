@@ -83,7 +83,7 @@ import datetime
 import operator
 import itertools
 from bs4 import BeautifulSoup
-from pdf2docx.main import parse
+# from pdf2docx.main import parse
 import matplotlib as mp
 import pickle
 import plotly.express as px
